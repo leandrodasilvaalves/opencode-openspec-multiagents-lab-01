@@ -1,0 +1,78 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "ca-architect": {
+      "mode": "primary",
+      "description": "Orquestrador de features em Clean Architecture .NET",
+      "permission": {
+        "edit": "deny",
+        "bash": "ask",
+        "task": {
+          "dotnet-*": "allow",
+          "explore": "allow"
+        }
+      }
+    },
+    "dotnet-domain": {
+      "mode": "subagent",
+      "temperature": 0.1,
+      "permission": {
+        "edit": "allow",
+        "bash": {
+          "*": "deny",
+          "dotnet build *": "allow",
+          "dotnet test *": "allow"
+        }
+      }
+    },
+    "dotnet-application": {
+      "mode": "subagent",
+      "temperature": 0.1,
+      "permission": {
+        "edit": "allow",
+        "bash": {
+          "*": "deny",
+          "dotnet build *": "allow",
+          "dotnet test *": "allow"
+        }
+      }
+    },
+    "dotnet-infra": {
+      "mode": "subagent",
+      "temperature": 0.2,
+      "permission": {
+        "edit": "allow",
+        "bash": {
+          "*": "deny",
+          "dotnet build *": "allow",
+          "dotnet test *": "allow",
+          "dotnet ef *": "allow"
+        }
+      }
+    },
+    "dotnet-api": {
+      "mode": "subagent",
+      "temperature": 0.2,
+      "permission": {
+        "edit": "allow",
+        "bash": {
+          "*": "deny",
+          "dotnet build *": "allow",
+          "dotnet test *": "allow"
+        }
+      }
+    },
+    "dotnet-reviewer": {
+      "mode": "subagent",
+      "temperature": 0.1,
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "*": "deny",
+          "dotnet build *": "allow",
+          "dotnet test *": "allow"
+        }
+      }
+    }
+  }
+}
