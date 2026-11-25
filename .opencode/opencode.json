@@ -4,9 +4,18 @@
     "ca-architect": {
       "mode": "primary",
       "description": "Orquestrador de features em Clean Architecture .NET",
+      "temperature": 0.2,
       "permission": {
         "edit": "deny",
-        "bash": "ask",
+        "bash": {
+          "*": "deny",
+          "dotnet build *": "allow",
+          "dotnet test *": "allow",
+          "dotnet restore *": "allow",
+          "git status": "allow",
+          "git diff": "allow",
+          "git log --oneline *": "allow"
+        },
         "task": {
           "dotnet-*": "allow",
           "explore": "allow"
@@ -46,7 +55,8 @@
           "*": "deny",
           "dotnet build *": "allow",
           "dotnet test *": "allow",
-          "dotnet ef *": "allow"
+          "dotnet ef migrations add *": "allow",
+          "dotnet ef migrations list": "allow"
         }
       }
     },
@@ -70,7 +80,10 @@
         "bash": {
           "*": "deny",
           "dotnet build *": "allow",
-          "dotnet test *": "allow"
+          "dotnet test *": "allow",
+          "git status": "allow",
+          "git diff": "allow",
+          "git log --oneline *": "allow"
         }
       }
     }

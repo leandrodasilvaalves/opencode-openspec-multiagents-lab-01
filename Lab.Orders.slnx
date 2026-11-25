@@ -1,8 +1,14 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/Lab.Orders.Domain/Lab.Orders.Domain.csproj" />
+    <Project Path="src/Lab.Orders.Application/Lab.Orders.Application.csproj" />
+    <Project Path="src/Lab.Orders.Infrastructure/Lab.Orders.Infrastructure.csproj" />
+    <Project Path="src/Lab.Orders.Api/Lab.Orders.Api.csproj" />
   </Folder>
   <Folder Name="/tests/">
-    <Project Path="tests/Lab.Orders.Domain.Tests/Lab.Orders.Domain.Tests.csproj" />
+    <Project Path="tests/Lab.Orders.Domain.UnitTests/Lab.Orders.Domain.UnitTests.csproj" />
+    <Project Path="tests/Lab.Orders.Application.UnitTests/Lab.Orders.Application.UnitTests.csproj" />
+    <Project Path="tests/Lab.Orders.Infrastructure.IntegrationTests/Lab.Orders.Infrastructure.IntegrationTests.csproj" />
+    <Project Path="tests/Lab.Orders.Api.FunctionalTests/Lab.Orders.Api.FunctionalTests.csproj" />
   </Folder>
 </Solution>

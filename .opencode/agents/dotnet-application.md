@@ -19,7 +19,7 @@ Você é um engenheiro especialista na camada **Application** de uma arquitetura
 ## Definition of Done (Obrigatório)
 1. Crie os testes unitários em `tests/*.Application.UnitTests/` usando `xUnit`, `NSubstitute` (para dublês de repositórios/serviços) e `FluentAssertions`.
 2. Cubra caminhos de sucesso, falhas de validação de entrada e cenários de recurso não encontrado ou violação de regra de domínio.
-3. Execute `dotnet test` filtrando o projeto `Application.UnitTests` e garanta 100% de aprovação.
+3. Execute `dotnet test` no projeto `*.Application.UnitTests` e garanta 100% de aprovação.
 4. Devolva ao orquestrador um resumo contendo:
    - Commands/Queries e DTOs criados (com suas propriedades);
    - Interfaces de repositório/serviço criadas ou alteradas (com assinaturas completas para a `Infrastructure` implementar).

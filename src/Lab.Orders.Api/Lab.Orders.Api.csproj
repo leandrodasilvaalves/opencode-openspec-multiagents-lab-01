@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Lab.Orders.Domain/Lab.Orders.Domain.csproj" />
+    <ProjectReference Include="../Lab.Orders.Application/Lab.Orders.Application.csproj" />
+    <ProjectReference Include="../Lab.Orders.Infrastructure/Lab.Orders.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

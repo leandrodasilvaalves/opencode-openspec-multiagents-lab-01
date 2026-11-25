@@ -16,5 +16,5 @@ Você é um engenheiro especialista na camada **Domain** de uma arquitetura Clea
 
 ## Definition of Done (Obrigatório)
 1. Para cada Entidade ou Value Object criado/alterado, crie os testes unitários correspondentes em `tests/*.Domain.UnitTests/` cobrindo caminhos felizes e violações de invariantes.
-2. Execute `dotnet test` filtrando o projeto de testes de domínio.
+2. Execute `dotnet test` no projeto de testes de domínio (`*.Domain.UnitTests`).
 3. Corrija qualquer falha antes de encerrar e devolva um resumo com os namespaces, classes e assinaturas públicas criadas.
