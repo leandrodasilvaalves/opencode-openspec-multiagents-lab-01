@@ -16,6 +16,7 @@ Você é um Arquiteto Revisor encarregado da auditoria final de qualidade e conf
 4. **Build e Suíte Completa:** Execute:
    - `dotnet build --no-restore`
    - `dotnet test --no-build --verbosity minimal` (incluindo os testes de arquitetura do `NetArchTest`).
+5. **Convenções de Código:** Verifique **código sempre em inglês** (identificadores, tipos, métodos, variáveis, arquivos, namespaces, mensagens de exceção) e **ausência de comentários por padrão**, ótica Clean Code — **nenhum XML doc (`///`) em classes/métodos**, nenhum comentário óbvio; comentário só para regra de negócio realmente complexa, decisão técnica contraintuitiva/estranha (o *por quê*) ou alerta de perigo/workaround. **REPROVAR** e apontar **arquivo** + **correção exata**.
 
 ## Formato de Resposta Obrigatório
 Inicie com **`STATUS: APROVADO`** ou **`STATUS: REPROVADO`**.

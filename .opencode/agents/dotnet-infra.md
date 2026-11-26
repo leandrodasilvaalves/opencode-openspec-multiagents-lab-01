@@ -17,6 +17,10 @@ Você é um engenheiro especialista na camada **Infrastructure** de uma arquitet
 - Configure clientes HTTP externos com timeouts e políticas de resiliência (`Microsoft.Extensions.Http.Resilience` / Polly).
 - Centralize a injeção de dependência em `AddInfrastructure(this IServiceCollection services, IConfiguration configuration)`.
 
+## Convenções de Código
+- **Código sempre em inglês**: identificadores, tipos, métodos, variáveis, arquivos, namespaces e mensagens de exceção. (Artefatos OpenSpec em português; **código em inglês**.)
+- **Sem comentários por padrão**, ótica Clean Code: código autoexplicativo. **Não** gerar XML doc (`///`) em classes/métodos. **Não** comentar o óbvio. Comentário **só** quando: (a) regra de negócio realmente complexa/não óbvia, (b) decisão técnica contraintuitiva/estranha — explicar o *por quê*, não o *o quê*, (c) alerta de perigo/workaround/restrição externa. Antes de comentar: melhor nome, extrair método, ou registrar em ADR.
+
 ## Definition of Done (Obrigatório)
 1. Crie ou atualize testes de integração em `tests/*.Infrastructure.IntegrationTests/` validando persistência real, constraints de banco, consultas e mapeamentos.
 2. Execute `dotnet test` no projeto `*.Infrastructure.IntegrationTests` e garanta que não há falhas de mapeamento ou migração.
