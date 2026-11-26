@@ -1,0 +1,453 @@
+{
+  "info": {
+    "name": "Lab.Orders API",
+    "description": "Coleção para exercitar os endpoints HTTP da Lab.Orders API: health check, cadastro de clientes e produtos e registro de pedidos com idempotência. Importe apenas este arquivo, mantenha a aplicação em http://localhost:5000 e execute as requisições na ordem listada para que os identificadores gerados sejam reaproveitados.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Body is Healthy\", function () {",
+              "    pm.expect(pm.response.text()).to.eql(\"Healthy\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Register Customer - Success",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"phone\": \"11999999999\",\n  \"document\": \"11144477735\",\n  \"street\": \"Main Street\",\n  \"number\": \"123\",\n  \"complement\": \"Apt 4B\",\n  \"neighborhood\": \"Downtown\",\n  \"city\": \"Sao Paulo\",\n  \"state\": \"SP\",\n  \"postalCode\": \"01001000\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/customers",
+          "host": ["{{baseUrl}}"],
+          "path": ["customers"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "if (pm.response.code === 201) {",
+              "    const body = pm.response.json();",
+              "",
+              "    pm.test(\"Response contains customerId\", function () {",
+              "        pm.expect(body.customerId).to.be.a(\"string\").and.not.empty;",
+              "    });",
+              "",
+              "    pm.test(\"Document kind is Cpf\", function () {",
+              "        pm.expect(body.documentKind).to.eql(\"Cpf\");",
+              "    });",
+              "",
+              "    pm.collectionVariables.set(\"customerId\", body.customerId);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Register Customer - Invalid Document",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"phone\": \"11999999999\",\n  \"document\": \"12345678901\",\n  \"street\": \"Main Street\",\n  \"number\": \"123\",\n  \"complement\": \"Apt 4B\",\n  \"neighborhood\": \"Downtown\",\n  \"city\": \"Sao Paulo\",\n  \"state\": \"SP\",\n  \"postalCode\": \"01001000\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/customers",
+          "host": ["{{baseUrl}}"],
+          "path": ["customers"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test(\"ProblemDetails title is InvalidCustomer\", function () {",
+              "    pm.expect(pm.response.json().title).to.eql(\"InvalidCustomer\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Register Product - Success",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sku\": \"SKU-{{$guid}}\",\n  \"description\": \"Test Product\",\n  \"basePrice\": 50.00\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/products",
+          "host": ["{{baseUrl}}"],
+          "path": ["products"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "if (pm.response.code === 201) {",
+              "    const body = pm.response.json();",
+              "",
+              "    pm.test(\"Response contains sku\", function () {",
+              "        pm.expect(body.sku).to.be.a(\"string\").and.not.empty;",
+              "    });",
+              "",
+              "    pm.collectionVariables.set(\"sku\", body.sku);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Register Product - Negative Price",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sku\": \"SKU-{{$guid}}\",\n  \"description\": \"Test Product\",\n  \"basePrice\": -10.00\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/products",
+          "host": ["{{baseUrl}}"],
+          "path": ["products"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test(\"ProblemDetails title is NegativePrice\", function () {",
+              "    pm.expect(pm.response.json().title).to.eql(\"NegativePrice\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Register Order - Success",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "{{idempotencyKey}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customerId\": \"{{customerId}}\",\n  \"items\": [\n    {\n      \"sku\": \"{{sku}}\",\n      \"quantity\": 2,\n      \"discount\": null\n    }\n  ],\n  \"paymentMethod\": \"Pix\",\n  \"discount\": null,\n  \"distanceKm\": 10.0,\n  \"idempotencyKey\": null\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/orders",
+          "host": ["{{baseUrl}}"],
+          "path": ["orders"]
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (!pm.collectionVariables.get(\"idempotencyKey\")) {",
+              "    pm.collectionVariables.set(\"idempotencyKey\", pm.variables.replaceIn(\"{{$guid}}\"));",
+              "}"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "if (pm.response.code === 201) {",
+              "    const body = pm.response.json();",
+              "",
+              "    pm.test(\"Response contains orderId\", function () {",
+              "        pm.expect(body.orderId).to.be.a(\"string\").and.not.empty;",
+              "    });",
+              "",
+              "    pm.test(\"Payment method is serialized as a string\", function () {",
+              "        pm.expect(body.paymentMethod).to.eql(\"Pix\");",
+              "    });",
+              "",
+              "    pm.collectionVariables.set(\"orderId\", body.orderId);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Register Order - Replay Same Key",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "{{idempotencyKey}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customerId\": \"{{customerId}}\",\n  \"items\": [\n    {\n      \"sku\": \"{{sku}}\",\n      \"quantity\": 2,\n      \"discount\": null\n    }\n  ],\n  \"paymentMethod\": \"Pix\",\n  \"discount\": null,\n  \"distanceKm\": 10.0,\n  \"idempotencyKey\": null\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/orders",
+          "host": ["{{baseUrl}}"],
+          "path": ["orders"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test(\"Replay returns the same orderId\", function () {",
+              "    pm.expect(pm.response.json().orderId).to.eql(pm.collectionVariables.get(\"orderId\"));",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Register Order - Missing Idempotency Key",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customerId\": \"{{customerId}}\",\n  \"items\": [\n    {\n      \"sku\": \"{{sku}}\",\n      \"quantity\": 2,\n      \"discount\": null\n    }\n  ],\n  \"paymentMethod\": \"Pix\",\n  \"discount\": null,\n  \"distanceKm\": 10.0,\n  \"idempotencyKey\": null\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/orders",
+          "host": ["{{baseUrl}}"],
+          "path": ["orders"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test(\"ProblemDetails title is IdempotencyKeyRequired\", function () {",
+              "    pm.expect(pm.response.json().title).to.eql(\"IdempotencyKeyRequired\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Register Order - Distance Too Far",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "{{$guid}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customerId\": \"{{customerId}}\",\n  \"items\": [\n    {\n      \"sku\": \"{{sku}}\",\n      \"quantity\": 2,\n      \"discount\": null\n    }\n  ],\n  \"paymentMethod\": \"Pix\",\n  \"discount\": null,\n  \"distanceKm\": 150.0,\n  \"idempotencyKey\": null\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/orders",
+          "host": ["{{baseUrl}}"],
+          "path": ["orders"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test(\"ProblemDetails title is DistanceTooFar\", function () {",
+              "    pm.expect(pm.response.json().title).to.eql(\"DistanceTooFar\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "customerId",
+      "value": ""
+    },
+    {
+      "key": "sku",
+      "value": ""
+    },
+    {
+      "key": "idempotencyKey",
+      "value": ""
+    },
+    {
+      "key": "orderId",
+      "value": ""
+    }
+  ]
+}

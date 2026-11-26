@@ -86,7 +86,9 @@
         "bash": {
           "*": "deny",
           "dotnet build *": "allow",
-          "dotnet test *": "allow"
+          "dotnet test *": "allow",
+          "docker compose up *": "allow",
+          "docker build *": "allow"
         }
       }
     },
