@@ -1,0 +1,19 @@
+me ajude a dividir este ideia em módulos de especificações:
+vamos criar um sistema de pedidos semelhante a um ifood.
+vamos precisar registrar um cliente: nome, telefone, documento(CPF,CNPJ), endereço de entrega
+vamos precisar registrar o pedido que tera um cliente, e terá os produtos, forma de pagamento, descontos, tarifa de entrega
+O pedido terá um ou mais produtos
+pedidos sem produtos deverá ser recusado
+os produtos terão SKU, descrição, preço, desconto unitário, preço final
+um produto pode ter desconto ou não
+nao é permitido desconto negativo tanto para produto quanto para o pedido
+o pedido não pode ter desconto quando já houver um ou mais produtos com desconto. Nesse caso devera aplicar descontos individuais
+o desconto do pedido só será permitido quando nenhum produto tiver desconto 
+
+
+O desconto pode ser aplicado tanto por percentual quanto por valor monetário. 
+Em ambos os casos o valor total não pode ser menor que zero.
+a taxa de entrega é baseado na distancia em quilometro. 
+NO mvp não haverá integração com serviços de mapas, então a taxa minima sera de 12 reais para até 15km. Apos isso será cobrado um real por quilometro adicional. Se a distancia for maior que 100k o podido será recusado.
+
+não será permitido desconto usando as duas modalidades ao mesmo. O desconto pode ser valor o percentual. Se informar os dois o pedido deverá ser rejeitado.
