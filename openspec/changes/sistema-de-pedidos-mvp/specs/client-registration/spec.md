@@ -61,3 +61,21 @@ O sistema DEVE (MUST) validar o documento do cliente quanto ao formato e aos dig
 - **GIVEN** que o documento informado nao corresponde ao formato de CPF ou CNPJ
 - **WHEN** o cliente e cadastrado
 - **THEN** o cadastro e recusado e uma mensagem indica que somente CPF ou CNPJ sao aceitos
+
+### Requirement: Endereco de entrega e estruturado e exige campos obrigatorios
+O sistema DEVE (MUST) aceitar um endereco de entrega estruturado e recusar quando algum campo obrigatorio estiver ausente ou vazio.
+
+#### Scenario: endereco estruturado completo e aceito
+- **GIVEN** que logradouro, numero, bairro, cidade, UF e CEP foram informados
+- **WHEN** o cliente e cadastrado
+- **THEN** o cadastro e aceito
+
+#### Scenario: endereco com campo obrigatorio ausente e recusado
+- **GIVEN** que algum campo obrigatorio do endereco (logradouro, numero, bairro, cidade, UF ou CEP) nao foi informado ou esta vazio
+- **WHEN** o cliente e cadastrado
+- **THEN** o cadastro e recusado e uma mensagem indica o campo obrigatorio
+
+#### Scenario: complemento do endereco e opcional
+- **GIVEN** que todos os campos obrigatorios do endereco foram informados e o complemento nao foi
+- **WHEN** o cliente e cadastrado
+- **THEN** o cadastro e aceito

@@ -110,3 +110,11 @@ O sistema DEVE (MUST) calcular o preco final do item como (preco base menos desc
 - **GIVEN** que o desconto unitario informado e cento e dez por cento
 - **WHEN** o pedido e registrado
 - **THEN** o pedido e recusado e uma mensagem indica que o desconto nao pode exceder o preco do produto
+
+### Requirement: Calculo do item e deterministico com precisao monetaria
+O sistema DEVE (MUST) calcular o preco final do item de forma deterministica, com valores monetarios em duas casas decimais, arredondamento half-up aplicado uma unica vez, independente de cultura do ambiente.
+
+#### Scenario: mesma entrada produz mesmo preco final
+- **GIVEN** os mesmos preco base, quantidade e desconto
+- **WHEN** o preco final do item e calculado em qualquer ambiente
+- **THEN** o resultado e identico, com duas casas decimais e arredondamento half-up aplicado uma unica vez

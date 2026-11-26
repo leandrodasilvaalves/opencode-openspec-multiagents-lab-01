@@ -31,9 +31,13 @@ Nenhuma. O projeto nao possui specs existentes.
 
 ## Impact
 
-- Domain: novos agregados, entidades e value objects para cliente, produto, item de pedido, desconto, distancia e pedido.
-- Application: casos de uso de cadastro de cliente, cadastro de produto e registro de pedido, com validacoes de negocio.
-- Infrastructure: persistencia dos agregados e implementacao dos repositorios.
-- Api: endpoints para cadastro de cliente, cadastro de produto e registro de pedido.
-- Testes: unitarios de dominio e aplicacao, integracao de persistencia e funcionais HTTP.
-- Dependencias externas: nenhuma para mapas ou provedor de pagamento no MVP.
+- Domain: novos agregados, entidades e value objects para cliente, produto, item de pedido, desconto, distancia e pedido. **Codigo em ingles.**
+- Application: casos de uso de cadastro de cliente, cadastro de produto e registro de pedido, com validacoes de negocio; contratos (`ICustomerRepository`/`IProductRepository`/`IOrderRepository`/`IIdempotencyStore`). **Criacao de pedido idempotente** (`IdempotencyKey`). **Codigo em ingles.**
+- Infrastructure: persistencia dos agregados e implementacao dos repositorios; **EF Core + MySQL** + migrations + **Dockerfile/docker-compose**. **Codigo em ingles.**
+- Api: endpoints para cadastro de cliente, cadastro de produto e registro de pedido; `ProblemDetails`; mensagens em ingles; camelCase. **Codigo em ingles.**
+- Testes: unitarios de dominio e aplicacao, integracao de persistencia (in-memory) e funcionais HTTP; xUnit + FluentAssertions + NSubstitute + AutoFixture. **Codigo em ingles.**
+- Dependencias externas: nenhuma para mapas ou provedor de pagamento no MVP; **sem mensageria**; sem CI por enquanto.
+
+## Refinamento tecnico
+
+Decisoes tecnicas, NFRs, contratos, modelo de dados, infra, resiliencia, seguranca, observabilidade e **ADRs** em `design.md`. Convencoes: **artefato em portugues; codigo em ingles; sem comentarios; ver `AGENTS.md`.**

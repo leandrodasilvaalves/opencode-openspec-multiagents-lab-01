@@ -90,3 +90,11 @@ O sistema DEVE (MUST) aplicar o desconto do pedido somente ao subtotal dos itens
 - **GIVEN** que o subtotal dos itens e R$ 100,00, o desconto do pedido e R$ 20,00 e a taxa de entrega e R$ 12,00
 - **WHEN** o total do pedido e calculado
 - **THEN** o desconto e descontado apenas do subtotal e a taxa de R$ 12,00 permanece integralmente no total
+
+### Requirement: Desconto e calculado com precisao monetaria deterministica
+O sistema DEVE (MUST) calcular o valor do desconto de forma deterministica, com valores monetarios em duas casas decimais, arredondamento half-up aplicado uma unica vez, independente de cultura do ambiente.
+
+#### Scenario: desconto percentual arredonda ao centavo uma unica vez
+- **GIVEN** um subtotal ou preco base e um percentual de desconto
+- **WHEN** o valor do desconto e calculado
+- **THEN** o resultado em moeda tem duas casas decimais, arredondado half-up uma unica vez, independente de cultura

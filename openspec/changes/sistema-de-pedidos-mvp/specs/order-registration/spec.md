@@ -107,3 +107,16 @@ O sistema DEVE (MUST) calcular o total como o maior valor entre zero e (subtotal
 - **GIVEN** que o subtotal dos itens e R$ 100,00 e o desconto do pedido e R$ 120,00
 - **WHEN** o pedido e registrado
 - **THEN** o pedido e recusado e uma mensagem indica que o desconto nao pode tornar o total negativo
+
+### Requirement: Criacao de pedido e idempotente
+O sistema DEVE (MUST) garantir que registrar um pedido com a mesma chave de idempotencia e o mesmo conteudo nao crie pedido duplicado, retornando o mesmo resultado.
+
+#### Scenario: mesma chave de idempotencia nao duplica pedido
+- **GIVEN** que um pedido foi registrado com uma `IdempotencyKey`
+- **WHEN** o mesmo pedido e reenviado com a mesma `IdempotencyKey`
+- **THEN** nao e criado um novo pedido e o mesmo resultado e retornado
+
+#### Scenario: chave de idempotencia diferente cria pedido novo
+- **GIVEN** que um pedido foi registrado com uma `IdempotencyKey`
+- **WHEN** o mesmo conteudo e enviado com outra `IdempotencyKey`
+- **THEN** um novo pedido e criado
