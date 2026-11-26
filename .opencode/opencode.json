@@ -1,5 +1,23 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "product-manager": {
+    "mode": "primary",
+    "description": "Gerente de Produto: transforma ideias em especificações OpenSpec prontas para implementação",
+    "temperature": 0.3,
+    "permission": {
+      "edit": "allow",
+      "bash": {
+        "*": "deny",
+        "openspec *": "allow",
+        "git status": "allow",
+        "git diff": "allow",
+        "git log --oneline *": "allow"
+      },
+      "task": {
+        "explore": "allow"
+      }
+    }
+  },
   "agent": {
     "ca-architect": {
       "mode": "primary",
