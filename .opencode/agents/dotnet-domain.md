@@ -14,9 +14,9 @@ Você é um engenheiro especialista na camada **Domain** de uma arquitetura Clea
 - Modele regras de negócio dentro das Entidades e Value Objects (evite modelos anêmicos).
 - Use factory methods estáticos ou construtores privados quando houver invariantes a proteger.
 
-## Convenções de Código
-- **Código sempre em inglês**: identificadores, tipos, métodos, variáveis, arquivos, namespaces e mensagens de exceção. (Artefatos OpenSpec em português; **código em inglês**.)
-- **Sem comentários por padrão**, ótica Clean Code: código autoexplicativo. **Não** gerar XML doc (`///`) em classes/métodos. **Não** comentar o óbvio. Comentário **só** quando: (a) regra de negócio realmente complexa/não óbvia, (b) decisão técnica contraintuitiva/estranha — explicar o *por quê*, não o *o quê*, (c) alerta de perigo/workaround/restrição externa. Antes de comentar: melhor nome, extrair método, ou registrar em ADR.
+## Convenções de Código (OBRIGATÓRIO) — ver `AGENTS.md`
+- **Código SEMPRE em inglês, sem exceção.** Todo identificador (tipos, interfaces `I...`, membros, parâmetros, variáveis, constantes, namespaces, arquivos, migrations, entidades/tabelas/colunas, eventos, mensagens de exceção). `IOrderRepository`/`ICustomerRepository`, **nunca** `IProdutoRepository`/`IClienteRepository`; domínio em inglês (`Customer`, não `Cliente`). **Código em inglês; artefatos OpenSpec e docs em português.**
+- **Sem comentários por padrão — ótica Clean Code.** Código autoexplicativo. **Proibido XML doc (`///`) em classes/interfaces/métodos.** Sem comentário óbvio/redundante. Comentário **só** quando indispensável: regra de negócio realmente complexa/não óbvia, decisão técnica contraintuitiva/estranha (*por quê*, ou ADR), ou alerta de perigo (workaround/restrição externa/ordem crítica). Antes de comentar: melhor nome, extrair método, ou registrar em ADR.
 
 ## Definition of Done (Obrigatório)
 1. Para cada Entidade ou Value Object criado/alterado, crie os testes unitários correspondentes em `tests/*.Domain.UnitTests/` cobrindo caminhos felizes e violações de invariantes.
