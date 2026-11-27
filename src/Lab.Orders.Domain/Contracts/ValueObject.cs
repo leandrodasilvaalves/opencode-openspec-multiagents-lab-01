@@ -1,6 +1,6 @@
 namespace Lab.Orders.Domain.Contracts;
 
-public abstract class ValueObject<T> : Validateble, IEquatable<T>
+public abstract class ValueObject<T> : Validatable, IEquatable<T>
 {
     public abstract bool Equals(T? other);
     public abstract override bool Equals(object? obj);

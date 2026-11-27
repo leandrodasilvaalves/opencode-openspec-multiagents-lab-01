@@ -2,7 +2,7 @@ using Lab.Orders.Domain.Exceptions;
 
 namespace Lab.Orders.Domain.Contracts;
 
-public abstract class Validateble
+public abstract class Validatable
 {
     private readonly List<Error> _errors = [];
 
@@ -35,7 +35,7 @@ public abstract class Validateble
 
     protected abstract string ErrorCode();
 
-    protected void Validate(Validateble? validateble)
+    protected void Validate(Validatable? validateble)
     {
         DomainNullException.ThrowIfNull(validateble);
 

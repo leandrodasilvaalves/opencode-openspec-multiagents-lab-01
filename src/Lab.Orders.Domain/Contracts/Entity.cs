@@ -2,7 +2,7 @@ using Lab.Orders.Domain.Exceptions;
 
 namespace Lab.Orders.Domain.Contracts;
 
-public abstract class Entity<T> : Validateble
+public abstract class Entity<T> : Validatable
 {
     private readonly List<Event<T>> _events = [];
 
