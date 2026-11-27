@@ -14,6 +14,9 @@ Você é um engenheiro especialista na camada **Domain** de uma arquitetura Clea
 - Modele regras de negócio dentro das Entidades e Value Objects (evite modelos anêmicos).
 - Use factory methods estáticos ou construtores privados quando houver invariantes a proteger.
 
+## Skill de Domínio
+- Antes de criar ou alterar entidades, value objects, enums, eventos, comandos ou contratos de domínio, carregue a skill `dotnet-domain-modeling` por meio da ferramenta `skill` e siga os padrões dela.
+
 ## Convenções de Código (OBRIGATÓRIO) — ver `AGENTS.md`
 - **Código SEMPRE em inglês, sem exceção.** Todo identificador (tipos, interfaces `I...`, membros, parâmetros, variáveis, constantes, namespaces, arquivos, migrations, entidades/tabelas/colunas, eventos, mensagens de exceção). `IOrderRepository`/`ICustomerRepository`, **nunca** `IProdutoRepository`/`IClienteRepository`; domínio em inglês (`Customer`, não `Cliente`). **Código em inglês; artefatos OpenSpec e docs em português.**
 - **Sem comentários por padrão — ótica Clean Code.** Código autoexplicativo. **Proibido XML doc (`///`) em classes/interfaces/métodos.** Sem comentário óbvio/redundante. Comentário **só** quando indispensável: regra de negócio realmente complexa/não óbvia, decisão técnica contraintuitiva/estranha (*por quê*, ou ADR), ou alerta de perigo (workaround/restrição externa/ordem crítica). Antes de comentar: melhor nome, extrair método, ou registrar em ADR.
