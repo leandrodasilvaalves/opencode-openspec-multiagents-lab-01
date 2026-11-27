@@ -3,13 +3,13 @@ using Lab.Orders.Domain.Contracts;
 
 namespace Lab.Orders.Domain.Exceptions;
 
-public class DomainRuleException : ArgumentNullException
+public class DomainRuleException : DomainException
 {
     public IEnumerable<Error> Errors { get; }
 
     public DomainRuleException(IEnumerable<Error> errors) => Errors = errors;
 
-    public static void ThrowIfNull(IEnumerable<Error> errors)
+    public static void ThrowIfAny(IEnumerable<Error> errors)
     {
         if (errors.Any())
         {

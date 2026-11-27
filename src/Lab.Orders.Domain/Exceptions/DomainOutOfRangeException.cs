@@ -3,10 +3,9 @@ using System.Runtime.CompilerServices;
 
 namespace Lab.Orders.Domain.Exceptions;
 
-public class DomainOutOfRangeException : Exception
+public class DomainOutOfRangeException : DomainException
 {
-    public DomainOutOfRangeException(string? message) : base(message)
-    { }
+    public DomainOutOfRangeException(string? message) : base(message) { }
 
     public static void ThrowIfLessThan<T>(T value, T other,
         [CallerArgumentExpression(nameof(value))] string? paramName = null)
@@ -18,5 +17,5 @@ public class DomainOutOfRangeException : Exception
 
     [DoesNotReturn]
     private static void Throw<T>(T value, T other, string? paramName) =>
-        throw new DomainOutOfRangeException($"{nameof(value)} must be greater or equals to {other}");
+        throw new DomainOutOfRangeException($"{paramName} must be greater than or equal to {other}.");
 }

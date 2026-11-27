@@ -3,10 +3,9 @@ using System.Runtime.CompilerServices;
 
 namespace Lab.Orders.Domain.Exceptions;
 
-public class DomainNullException : Exception
+public class DomainNullException : DomainException
 {
-    public DomainNullException(string? message) : base(message)
-    { }
+    public DomainNullException(string? message) : base(message) { }
 
     public static void ThrowIfNull([NotNull] object? argument,
         [CallerArgumentExpression(nameof(argument))] string? paramName = null)
