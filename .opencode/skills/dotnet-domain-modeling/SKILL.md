@@ -41,6 +41,7 @@ src/<Project>.Domain/
     <Entities>/
       I<Action><Entity>.cs
   Exceptions/
+    DomainException.cs
     DomainNullException.cs
     DomainRuleException.cs
     DomainOutOfRangeException.cs
@@ -265,6 +266,20 @@ public abstract class Entity : Entity<Guid>
 
 As exceções abaixo são **referência**. Crie-as apenas se o projeto ainda não tiver equivalentes. **Não crie exceções sem motivo**: reutilize as existentes quando a semântica for a mesma. Crie novas exceções somente quando o tipo de falha for semanticamente distinto e útil para o domínio.
 
+Toda exceção de domínio herda de `DomainException`, que herda de `Exception`. Isso permite capturar qualquer falha do domínio em um único tipo base. Nunca herde de exceções de framework (ex.: `ArgumentNullException`).
+
+### DomainException
+
+```csharp
+namespace <RootNamespace>.Exceptions;
+
+public class DomainException : Exception
+{
+    public DomainException() { }
+    public DomainException(string? message) : base(message) { }
+}
+```
+
 ### Referências base
 
 ```csharp
@@ -273,7 +288,7 @@ using System.Runtime.CompilerServices;
 
 namespace <RootNamespace>.Exceptions;
 
-public class DomainNullException : Exception
+public class DomainNullException : DomainException
 {
     public DomainNullException(string? message) : base(message)
     { }
@@ -299,7 +314,7 @@ using <RootNamespace>.Contracts;
 
 namespace <RootNamespace>.Exceptions;
 
-public class DomainRuleException : Exception
+public class DomainRuleException : DomainException
 {
     public IEnumerable<Error> Errors { get; }
 
@@ -325,7 +340,7 @@ using System.Runtime.CompilerServices;
 
 namespace <RootNamespace>.Exceptions;
 
-public class DomainOutOfRangeException : Exception
+public class DomainOutOfRangeException : DomainException
 {
     public DomainOutOfRangeException(string? message) : base(message)
     { }
@@ -344,10 +359,11 @@ public class DomainOutOfRangeException : Exception
 }
 ```
 
-### Quando criar uma nova DomainException
+### Quando criar uma nova exceção de domínio
 
 - A falha tem significado de negócio específico (ex.: conflito de estado, violação de política, limite de capacidade) e não é bem representada por `DomainRuleException`/`DomainNullException`/`DomainOutOfRangeException`.
 - O consumidor do domínio se beneficia em distinguir o tipo da falha.
+- Herde de `DomainException`, nunca diretamente de `Exception` ou de uma exceção de framework.
 - Mantenha o padrão: nome claro em inglês, sufixo `Exception`, construtor/hélperes estáticos apenas quando úteis.
 
 ## Como criar uma Entidade
@@ -529,5 +545,5 @@ public interface I<Behavior><Entity>
 - [ ] Evento criado e disparado por mutação relevante.
 - [ ] `Apply` correspondente ao evento restaura estado necessário.
 - [ ] `ErrorCode()` consistente.
-- [ ] Exceções novas criadas apenas quando semanticamente necessárias.
+- [ ] Exceções novas criadas apenas quando semanticamente necessárias e herdando de `DomainException`.
 - [ ] Testes unitários de domínio cobrindo sucesso, falha de regra e evento/estado.
