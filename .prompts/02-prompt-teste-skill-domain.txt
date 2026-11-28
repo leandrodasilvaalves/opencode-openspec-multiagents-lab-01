@@ -1,0 +1,17 @@
+vamos criar um sistema de cadastro de clientes e pedidos.
+Neste momento vamos focar apenas no cadastro de clientes.
+
+O cadastro deverá ser informado:
+ - nome
+ - data de nascimento
+ - email
+ - telefone
+
+ regras
+  - deverá informar o nome completo
+  - o email deverá ser válido
+  - o telefone deverá ser valido de acordo com padrao brasileiro
+  - o cliente precisa ser maior de 18 anos
+
+neste momento vamos focar apenas no desenvolvimento do dominio.
+não é necessário implementar testes de unidade
